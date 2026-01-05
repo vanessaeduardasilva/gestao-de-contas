@@ -1,87 +1,126 @@
 /**
- * ORGANIZERION - CORE ENGINE
+ * ORGANIZERION - CORE ENGINE (FINAL)
  */
 
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Inicializa a lógica de usuário
-    initPaginaUsuario();
-    
-    // 2. Verifica se estamos no Dashboard
-    const isDashboard = document.getElementById('ACCOUNT-FORM') || 
-                        document.getElementById('account-form') || 
-                        window.location.pathname.includes('conta.html');
+let contasGlobais = [];
 
-    if (isDashboard) {
-        exibirBoasVindas();
-        if (typeof initPaginaContas === "function") {
-            initPaginaContas();
-        }
+document.addEventListener('DOMContentLoaded', () => {
+    const accountForm = document.getElementById('account-form');
+
+    if (accountForm) {
+        carregarContas();
+
+        accountForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const dados = {
+                descricao: document.getElementById('descricao').value,
+                valor: document.getElementById('valor').value,
+                data: document.getElementById('data').value,
+                modalidade: document.getElementById('modalidade').value,
+                usuario_id: 2
+            };
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/api/contas', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dados)
+                });
+
+                const result = await response.json();
+
+                if (!response.ok || result.success === false) {
+                    throw new Error(result.error || 'Erro desconhecido');
+                }
+
+                accountForm.reset();
+                carregarContas();
+
+            } catch (error) {
+                alert("Erro ao salvar: " + error.message);
+            }
+        });
     }
 });
 
-// --- LÓGICA DE USUÁRIO (VÍNCULO COM GOOGLE) ---
 
-async function initPaginaUsuario() {
-    const form = document.getElementById('user-form');
-    if (!form) return;
+// ============================
+// BUSCAR CONTAS
+// ============================
+async function carregarContas() {
+    try {
+        const response = await fetch('http://127.0.0.1:5000/api/contas/2');
+        contasGlobais = await response.json();
+        renderizarTabela(contasGlobais);
+    } catch (error) {
+        console.error("Erro ao carregar contas:", error);
+    }
+}
 
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const btn = form.querySelector('button');
-        const originalText = btn.innerText;
-        btn.innerText = "ABRINDO LOGIN GOOGLE..."; 
-        btn.disabled = true;
 
-        const nome = document.getElementById('user-nome').value;
-        const email = document.getElementById('user-email').value;
+// ============================
+// RENDERIZAR TABELA
+// ============================
+function renderizarTabela(contas) {
+    const tbody = document.getElementById('table-body');
+    tbody.innerHTML = "";
 
-        try {
-            // ROTA CORRETA: /api/vincular para ativar o main.py no Python
-            const response = await fetch('http://localhost:5000/api/vincular', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ nome, email })
-            });
+    if (!contas.length) {
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="5" style="text-align:center;">
+                    Nenhuma conta registrada
+                </td>
+            </tr>
+        `;
+        return;
+    }
 
-            if (response.ok) {
-                localStorage.setItem('organizerion_user', JSON.stringify({
-                    id: Date.now(),
-                    nome: nome,
-                    email: email
-                }));
-                // Redireciona para o dashboard após o Python abrir o navegador
-                window.location.href = 'conta.html';
-            } else {
-                throw new Error("Falha na comunicação com o servidor.");
-            }
-
-        } catch (error) {
-            console.error("Erro:", error);
-            // Fallback apenas salva local se o servidor estiver realmente offline
-            localStorage.setItem('organizerion_user', JSON.stringify({
-                id: Date.now(),
-                nome: nome
-            }));
-            window.location.href = 'conta.html';
-        }
+    contas.forEach(conta => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${conta.descricao}</td>
+            <td>${formatarData(conta.vencimento)}</td>
+            <td>R$ ${conta.valor.toFixed(2)}</td>
+            <td>${conta.tipo}</td>
+            <td></td>
+        `;
+        tbody.appendChild(tr);
     });
 }
 
-function exibirBoasVindas() {
-    const dadosRaw = localStorage.getItem('organizerion_user');
-    if (!dadosRaw) return;
 
-    const dados = JSON.parse(dadosRaw);
-    const navLogo = document.querySelector('.nav-logo'); 
-
-    if (dados && dados.nome && navLogo) {
-        if (document.getElementById('user-welcome-msg')) return;
-
-        const userDisplay = document.createElement('span');
-        userDisplay.id = 'user-welcome-msg';
-        userDisplay.style.cssText = "margin-left: 15px; font-size: 0.85rem; color: var(--text-muted); font-weight: 400; text-transform: none;";
-        userDisplay.innerHTML = `| Olá, <strong>${dados.nome.split(' ')[0]}</strong>`;
-        navLogo.appendChild(userDisplay);
+// ============================
+// FILTROS
+// ============================
+function filtrar(tipo) {
+    if (tipo === 'todas') {
+        renderizarTabela(contasGlobais);
+        return;
     }
+
+    const filtradas = contasGlobais.filter(
+        c => c.tipo === tipo
+    );
+
+    renderizarTabela(filtradas);
+}
+
+
+// ============================
+// UTIL
+// ============================
+function formatarData(dataISO) {
+    return new Date(dataISO).toLocaleDateString('pt-BR');
+}
+
+
+// ============================
+// PARCELAS
+// ============================
+function toggleParcelas() {
+    const tipo = document.getElementById('modalidade').value;
+    document.getElementById('group-parcelas').style.display =
+        tipo === 'parcelada' ? 'block' : 'none';
 }

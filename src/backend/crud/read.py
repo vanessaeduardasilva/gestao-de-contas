@@ -1,18 +1,23 @@
 # responsável por buscar dados
 
-from database import (
-    buscar_todos_usuarios,
-    buscar_usuario_por_id,
-    buscar_contas_por_usuario
-)
-
-def listar_usuarios():
-    return buscar_todos_usuarios()
-
-
-def obter_usuario(usuario_id: int):
-    return buscar_usuario_por_id(usuario_id)
-
+from models.conta import Conta, TipoConta
+from database import buscar_contas_por_usuario
 
 def listar_contas_usuario(usuario_id: int):
-    return buscar_contas_por_usuario(usuario_id)
+    rows = buscar_contas_por_usuario(usuario_id)
+    contas = []
+
+    for r in rows:
+        contas.append(Conta(
+            id=r["id"],
+            usuario_id=usuario_id,
+            descricao=r["descricao"],
+            valor=r["valor"],
+            vencimento=r["vencimento"],  # pode ser string ISO
+            tipo=TipoConta(r["tipo"]),
+            parcela_atual=r["parcela_atual"],
+            total_parcelas=r["total_parcelas"],
+            sincronizado=bool(r["sincronizado"])
+        ))
+
+    return contas
