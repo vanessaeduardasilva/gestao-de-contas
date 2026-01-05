@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Organizerion</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+</head>
+<body>
+
+<main class="container">
+
+    <!-- Estatísticas -->
+    <section class="dashboard-stats animate-up">
+        <div class="stat-card">
+            <span class="text-uppercase">Total do Mês</span>
+            <h2 id="total-mes">R$ 0,00</h2>
+        </div>
+        <div class="stat-card alert">
+            <span class="text-uppercase">Vencendo Hoje</span>
+            <h2 id="total-vencendo">0</h2>
+        </div>
+        <div class="stat-card">
+            <span class="text-uppercase">Sincronizados</span>
+            <h2 id="total-sync">0</h2>
+        </div>
+    </section>
+
+    <!-- Dashboard -->
+    <div class="layout-dashboard">
+
+        <!-- Formulário -->
+        <aside class="sidebar-form">
+            <div class="card animate-up">
+                <h3 class="text-uppercase">Novo Registro</h3>
+                <form id="account-form">
+                    <input type="text" id="desc" placeholder="Descrição" required>
+                    <div class="input-row">
+                        <input type="number" step="0.01" id="valor" placeholder="Valor" required>
+                        <input type="date" id="data" required>
+                    </div>
+
+                    <div class="modalidade-selector">
+                        <label class="text-uppercase">Modalidade</label>
+                        <select id="tipo-conta" onchange="toggleParcelas()">
+                            <option value="fixa">Fixa</option>
+                            <option value="esporadica">Esporádica</option>
+                            <option value="parcelada">Parcelada</option>
+                        </select>
+                    </div>
+
+                    <div id="group-parcelas" class="parcela-box" style="display:none">
+                        <label class="text-uppercase">Número de Parcelas</label>
+                        <input type="number" id="qtd-parcelas" min="2" placeholder="Ex: 12">
+                    </div>
+
+                    <button type="submit" class="btn-primary text-uppercase">Efetivar Registro</button>
+                </form>
+            </div>
+        </aside>
+
+        <!-- Lista de lançamentos -->
+        <section class="main-content">
+            <div class="card animate-up">
+                <div class="card-header-actions">
+                    <h3 class="text-uppercase">Lançamentos de Janeiro</h3>
+                    <div class="tab-group">
+                        <button class="tab-btn active" onclick="filtrar('todas')">Todas</button>
+                        <button class="tab-btn" onclick="filtrar('fixa')">Fixas</button>
+                        <button class="tab-btn" onclick="filtrar('parcelada')">Parceladas</button>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <table id="accounts-table">
+                        <thead>
+                            <tr class="text-uppercase">
+                                <th>Item</th>
+                                <th>Data</th>
+                                <th>Valor</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</main>
+
+<script src="js/app.js"></script>
+</body>
+</html>
+

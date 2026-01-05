@@ -1,0 +1,86 @@
+.container {
+    width: 100%;
+    max-width: 1100px; /* Largura controlada para foco central */
+    height: 90vh;      /* Altura levemente menor que a tela para flutuar */
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    padding: 10px;
+}
+
+/* Cards de Estatística no topo */
+.dashboard-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    width: 100%;
+    flex-shrink: 0;
+}
+
+/* Área principal do Dashboard */
+.layout-dashboard {
+    display: flex;
+    flex: 1;
+    gap: 24px;
+    min-height: 0; /* Essencial para o scroll interno funcionar */
+    width: 100%;
+}
+
+/* Formulário à Esquerda */
+.sidebar-form {
+    width: 320px;
+    flex-shrink: 0;
+}
+
+/* Conteúdo da Tabela à Direita */
+.main-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+/* Estilo Base dos Cards */
+.card {
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+/* Header interno dos cards */
+.card-header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+/* Container da Tabela com Scroll */
+.table-container {
+    flex: 1;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+/* Barra de rolagem discreta */
+.table-container::-webkit-scrollbar {
+    width: 5px;
+}
+.table-container::-webkit-scrollbar-thumb {
+    background: #e2e8f0;
+    border-radius: 10px;
+}
+
+/* Responsividade para Tablets e Celulares */
+@media (max-width: 1024px) {
+    html, body { overflow: auto; height: auto; align-items: flex-start; }
+    .container { height: auto; padding: 20px; }
+    .layout-dashboard { flex-direction: column; }
+    .sidebar-form { width: 100%; }
+    .dashboard-stats { grid-template-columns: 1fr; }
+}
