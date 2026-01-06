@@ -75,16 +75,20 @@ def listar_contas(usuario_id):
     try:
         contas = listar_contas_usuario(usuario_id)
 
-        # Converte objetos Conta em JSON
         resultado = []
         for c in contas:
+            # trata o vencimento (string ou date)
+            venc = c.vencimento
+            if hasattr(venc, 'isoformat'):
+                venc = venc.isoformat()
+
             resultado.append({
                 "id": c.id,
                 "descricao": c.descricao,
-                "valor": c.valor,
-                "vencimento": c.vencimento.isoformat(),
+                "valor": float(c.valor),
+                "vencimento": venc,
                 "tipo": c.tipo.value if hasattr(c.tipo, "value") else c.tipo,
-                "sincronizado": c.sincronizado
+                "sincronizado": bool(c.sincronizado)
             })
 
         print(f"📤 {len(resultado)} contas enviadas para o frontend.")
