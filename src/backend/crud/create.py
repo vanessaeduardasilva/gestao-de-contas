@@ -6,9 +6,8 @@ from models.conta import Conta
 
 
 def criar_usuario(nome: str, email: str) -> int:
-    # cria um objeto Usuario usando o model
     usuario = Usuario(
-        id=None,        # será gerado pelo banco
+        id=None,      
         nome=nome,
         email=email
     )
