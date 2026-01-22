@@ -17,7 +17,6 @@ def get_connection():
 def init_db():
     with get_connection() as conn:
 
-        # tabela de usuários
         conn.execute("""
         CREATE TABLE IF NOT EXISTS usuarios (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -26,7 +25,6 @@ def init_db():
         );
         """)
 
-        # tabela de contas
         conn.execute("""
         CREATE TABLE IF NOT EXISTS contas (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -44,10 +42,7 @@ def init_db():
 
     print(f"banco de dados pronto e salvo em: {DB_PATH}")
 
-# FUNÇÕES DE INSERT (CREATE)
-
 def salvar_usuario_no_banco(usuario_obj):
-    # salva um usuário e retorna o id gerado
     with get_connection() as conn:
         cursor = conn.cursor()
         cursor.execute(
@@ -59,7 +54,6 @@ def salvar_usuario_no_banco(usuario_obj):
 
 
 def salvar_conta_no_banco(conta_obj):
-    # salva uma conta no banco
     with get_connection() as conn:
         conn.execute("""
             INSERT INTO contas (
@@ -83,8 +77,6 @@ def salvar_conta_no_banco(conta_obj):
             1 if conta_obj.sincronizado else 0
         ))
         conn.commit()
-
-# FUNÇÕES DE SELECT 
 
 def buscar_todos_usuarios():
     with get_connection() as conn:
@@ -156,10 +148,7 @@ def buscar_contas_por_vencimento(data_inicio, data_fim):
             ORDER BY vencimento
         """, (data_inicio, data_fim)).fetchall()
 
-# FUNÇÕES DE UPDATE
-
 def atualizar_conta(conta_obj):
-    # atualiza todos os dados de uma conta existente
     with get_connection() as conn:
         conn.execute("""
             UPDATE contas
@@ -194,10 +183,7 @@ def marcar_conta_como_sincronizada(conta_id):
         """, (conta_id,))
         conn.commit()
 
-# FUNÇÕES DE DELETE
-
 def deletar_conta(conta_id):
-    # remove a conta pelo id
     with get_connection() as conn:
         conn.execute("""
             DELETE FROM contas
@@ -207,16 +193,12 @@ def deletar_conta(conta_id):
 
 
 def deletar_usuario(usuario_id):
-    # remove o usuário
-    # as contas dele são apagadas automaticamente 
     with get_connection() as conn:
         conn.execute("""
             DELETE FROM usuarios
             WHERE id = ?
         """, (usuario_id,))
         conn.commit()
-
-# EXECUÇÃO DIRETA
 
 if __name__ == "__main__":
     init_db()
