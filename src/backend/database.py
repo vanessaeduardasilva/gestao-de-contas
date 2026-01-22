@@ -1,25 +1,20 @@
 import sqlite3
 from pathlib import Path
 
-# onde o banco de dados ficará salvo
 BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = BASE_DIR / "gestor_contas.db"
 
 def get_connection():
-    # abre a conexão com o banco
     conn = sqlite3.connect(DB_PATH)
 
-    # garante que o sqlite respeite as chaves estrangeiras
     conn.execute("PRAGMA foreign_keys = ON;")
 
-    # permite acessar colunas pelo nome
     conn.row_factory = sqlite3.Row
 
     return conn
 
 
 def init_db():
-    # cria as tabelas do sistema se elas ainda não existirem
     with get_connection() as conn:
 
         # tabela de usuários
@@ -191,7 +186,6 @@ def atualizar_conta(conta_obj):
 
 
 def marcar_conta_como_sincronizada(conta_id):
-    # marca a conta como sincronizada com o Google Calendar
     with get_connection() as conn:
         conn.execute("""
             UPDATE contas
@@ -203,7 +197,7 @@ def marcar_conta_como_sincronizada(conta_id):
 # FUNÇÕES DE DELETE
 
 def deletar_conta(conta_id):
-    # remove uma conta pelo id
+    # remove a conta pelo id
     with get_connection() as conn:
         conn.execute("""
             DELETE FROM contas
@@ -213,8 +207,8 @@ def deletar_conta(conta_id):
 
 
 def deletar_usuario(usuario_id):
-    # remove um usuário
-    # as contas dele são apagadas automaticamente (cascade)
+    # remove o usuário
+    # as contas dele são apagadas automaticamente 
     with get_connection() as conn:
         conn.execute("""
             DELETE FROM usuarios
