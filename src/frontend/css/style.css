@@ -1,11 +1,11 @@
 :root {
-    --bg-body: #f8fafc;        /* cinza azulado quase branco */
+    --bg-body: #f8fafc;        
     --card-bg: #ffffff;
-    --primary: #0f172a;        /* azul marinho escuro (profundo) */
-    --accent: #3b82f6;         /* azul vibrante para botões */
-    --text-main: #334155;      /* cinza ardósia escuro */
-    --text-muted: #94a3b8;     /* cinza claro para legendas */
-    --border: #e2e8f0;         /* bordas finas e leves */
+    --primary: #0f172a;        
+    --accent: #3b82f6;         
+    --text-main: #334155;      
+    --text-muted: #94a3b8;     
+    --border: #e2e8f0;         
 }
 
 * {
@@ -21,7 +21,7 @@ body {
     line-height: 1.6;
 }
 
-/* navbar moderna e minimalista */
+
 .navbar {
     background: var(--card-bg);
     border-bottom: 1px solid var(--border);
@@ -63,7 +63,7 @@ body {
     color: var(--accent);
 }
 
-/* containers e cards */
+
 .container {
     max-width: 1100px;
     margin: 0 auto;
@@ -73,12 +73,11 @@ body {
 .card {
     background: var(--card-bg);
     border: 1px solid var(--border);
-    border-radius: 8px; /* menos arredondado = mais profissional */
+    border-radius: 8px; 
     padding: 24px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
 }
 
-/* formulários limpos */
 .input-group {
     margin-bottom: 1.2rem;
 }
@@ -107,7 +106,6 @@ input:focus {
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-/* botões sólidos */
 button {
     cursor: pointer;
     font-weight: 600;
@@ -131,7 +129,6 @@ button {
     color: white;
 }
 
-/* tabela estilo dashboard clean */
 table {
     width: 100%;
     border-collapse: collapse;
