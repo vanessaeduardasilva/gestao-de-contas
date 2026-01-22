@@ -14,13 +14,13 @@ class TipoConta(str, Enum):
 
 @dataclass
 class Conta:
-    id: Optional[int]              # gerado automaticamente pelo banco
-    usuario_id: int                # foreign key → Usuario.id
-    descricao: str                 # exemplo: "Conta de luz"
-    valor: float                   # valor da conta
-    vencimento: date               # data de vencimento
-    tipo: TipoConta                # tipo da conta
-    parcela_atual: int = 1         # parcela atual (se parcelada)
-    total_parcelas: int = 1        # total de parcelas
-    sincronizado: bool = False     # já foi enviada ao Google Calendar?
+    id: Optional[int]              
+    usuario_id: int             
+    descricao: str                
+    valor: float                 
+    vencimento: date              
+    tipo: TipoConta               
+    parcela_atual: int = 1         
+    total_parcelas: int = 1      
+    sincronizado: bool = False     
  
