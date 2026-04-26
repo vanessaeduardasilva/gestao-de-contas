@@ -8,7 +8,6 @@ SCOPES = ['https://www.googleapis.com/auth/calendar']
 
 def get_calendar_service():
     creds = None
-    # Define o caminho para a pasta backend onde os arquivos devem estar
     base_dir = os.path.dirname(os.path.abspath(__file__))
     creds_path = os.path.join(base_dir, 'credentials.json')
     token_path = os.path.join(base_dir, 'token.json')
@@ -20,7 +19,6 @@ def get_calendar_service():
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            # Usa o arquivo que você baixou e renomeou
             flow = InstalledAppFlow.from_client_secrets_file(creds_path, SCOPES)
             creds = flow.run_local_server(port=0)
         with open(token_path, 'w') as token:

@@ -1,6 +1,3 @@
-/**
- * ORGANIZERION - CORE ENGINE (FINAL)
- */
 
 let contasGlobais = [];
 
@@ -45,9 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 
-// ============================
-// BUSCAR CONTAS
-// ============================
 async function carregarContas() {
     try {
         const response = await fetch('http://127.0.0.1:5000/api/contas/2');
@@ -59,9 +53,6 @@ async function carregarContas() {
 }
 
 
-// ============================
-// RENDERIZAR TABELA
-// ============================
 function renderizarTabela(contas) {
     const tbody = document.getElementById('table-body');
     tbody.innerHTML = "";
@@ -91,9 +82,6 @@ function renderizarTabela(contas) {
 }
 
 
-// ============================
-// FILTROS
-// ============================
 function filtrar(tipo) {
     if (tipo === 'todas') {
         renderizarTabela(contasGlobais);
@@ -107,18 +95,11 @@ function filtrar(tipo) {
     renderizarTabela(filtradas);
 }
 
-
-// ============================
-// UTIL
-// ============================
 function formatarData(dataISO) {
     return new Date(dataISO).toLocaleDateString('pt-BR');
 }
 
 
-// ============================
-// PARCELAS
-// ============================
 function toggleParcelas() {
     const tipo = document.getElementById('modalidade').value;
     document.getElementById('group-parcelas').style.display =

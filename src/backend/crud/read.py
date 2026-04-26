@@ -13,7 +13,7 @@ def listar_contas_usuario(usuario_id: int):
             usuario_id=usuario_id,
             descricao=r["descricao"],
             valor=r["valor"],
-            vencimento=r["vencimento"],  # pode ser string ISO
+            vencimento=r["vencimento"],  
             tipo=TipoConta(r["tipo"]),
             parcela_atual=r["parcela_atual"],
             total_parcelas=r["total_parcelas"],

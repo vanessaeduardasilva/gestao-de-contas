@@ -3,7 +3,7 @@
 :root {
     --bg-main: #f8f9fc;
     --primary: #0f172a;
-    --accent: #5c67f2; /* Azul idêntico à sua tela de perfil */
+    --accent: #5c67f2;
     --success: #10b981;
     --danger: #ef4444;
     --border-color: #e2e8f0;
@@ -24,7 +24,6 @@
 html, body {
     height: 100vh;
     width: 100vw;
-    /* Centralização total da aplicação */
     display: flex;
     align-items: center; 
     justify-content: center; 
