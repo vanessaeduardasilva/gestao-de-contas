@@ -1,6 +1,7 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from datetime import datetime
+import os
 
 # Importações do projeto
 from crud.create import criar_usuario, criar_conta
@@ -17,6 +18,35 @@ CORS(app, resources={r"/*": {"origins": "*"}})
 
 # Inicializa o banco (cria tabelas se necessário)
 init_db()
+
+# ==========================================
+# ROTAS DO FRONTEND
+# ==========================================
+FRONTEND_PATH = os.path.join(os.path.dirname(__file__), '..', 'frontend')
+
+from crud.create import criar_usuario, criar_conta
+
+@app.route('/api/usuarios', methods=['POST'])
+def registrar_usuario():
+    dados = request.get_json()
+    try:
+        nome = dados.get('nome')
+        email = dados.get('email')
+        criar_usuario(nome, email)
+        return jsonify({"success": True}), 200
+    except Exception as e:
+        # Se email já existe, redireciona mesmo assim
+        if "UNIQUE constraint failed" in str(e):
+            return jsonify({"success": True, "message": "Usuário já existe"}), 200
+        return jsonify({"success": False, "error": str(e)}), 500
+
+@app.route('/')
+def index():
+    return send_from_directory(FRONTEND_PATH, 'usuario.html')
+
+@app.route('/<path:filename>')
+def static_files(filename):
+    return send_from_directory(FRONTEND_PATH, filename)
 
 # ==========================================
 # ROTA: REGISTRAR CONTA
@@ -97,6 +127,7 @@ def listar_contas(usuario_id):
     except Exception as e:
         print("❌ ERRO AO LISTAR CONTAS:", e)
         return jsonify([]), 500
+
 
 
 # ==========================================

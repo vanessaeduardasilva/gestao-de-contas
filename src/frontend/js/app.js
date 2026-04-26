@@ -124,3 +124,35 @@ function toggleParcelas() {
     document.getElementById('group-parcelas').style.display =
         tipo === 'parcelada' ? 'block' : 'none';
 }
+const userForm = document.getElementById('user-form');
+
+if (userForm) {
+    userForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const dados = {
+            nome: document.getElementById('user-nome').value,
+            email: document.getElementById('user-email').value
+        };
+
+        try {
+            const response = await fetch('http://127.0.0.1:5000/api/usuarios', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            });
+
+            const result = await response.json();
+
+            if (!response.ok || result.success === false) {
+                throw new Error(result.error || 'Erro desconhecido');
+            }
+
+            // Redireciona para o dashboard
+            window.location.href = '/conta.html';
+
+        } catch (error) {
+            alert("Erro ao vincular conta: " + error.message);
+        }
+    });
+}
