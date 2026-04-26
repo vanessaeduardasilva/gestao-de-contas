@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard | Organizerion</title>
-    
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/components.css">
     <link rel="stylesheet" href="css/layout.css">
@@ -35,7 +34,7 @@
                 <h3 class="text-uppercase">Novo Registro</h3>
                 <form id="account-form">
                     <input type="text" id="descricao" placeholder="Descrição" required>
-                    
+
                     <div class="input-row">
                         <input type="number" step="0.01" id="valor" placeholder="Valor" required>
                         <input type="date" id="data" required>
@@ -55,7 +54,9 @@
                         <input type="number" id="qtd-parcelas" min="2" placeholder="Ex: 12">
                     </div>
 
-                    <button type="submit" id="btn-registrar" class="btn-primary text-uppercase">Efetivar Registro</button>
+                    <button type="submit" id="btn-registrar" class="btn-primary text-uppercase">
+                        Efetivar Registro
+                    </button>
                 </form>
             </div>
         </aside>
@@ -64,13 +65,20 @@
             <div class="card animate-up">
                 <div class="card-header-actions">
                     <h3 class="text-uppercase">Lançamentos</h3>
+                    <input
+                        type="month"
+                        id="filtro-mes"
+                        value="2026-04"
+                        onchange="renderizarTabela(contasGlobais)"
+                        style="padding: 6px 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 13px;"
+                    >
                     <div class="tab-group">
                         <button class="tab-btn active" onclick="filtrar('todas')">Todas</button>
                         <button class="tab-btn" onclick="filtrar('fixa')">Fixas</button>
                         <button class="tab-btn" onclick="filtrar('parcelada')">Parceladas</button>
                     </div>
                 </div>
-                
+
                 <div class="table-container">
                     <table id="accounts-table">
                         <thead>
@@ -82,12 +90,12 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody id="table-body">
-                            </tbody>
+                        <tbody id="table-body"></tbody>
                     </table>
                 </div>
             </div>
         </section>
+
     </div>
 </main>
 
