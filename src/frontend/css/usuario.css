@@ -1,11 +1,10 @@
-
 .page-user {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    background-color: var(--bg-main);
+    background-color: #F5F0E8;
 }
 
 .navbar {
@@ -27,14 +26,12 @@
 .nav-logo {
     font-weight: 800;
     letter-spacing: 2px;
-    color: var(--primary);
+    color: #2D1B4E;
     font-size: 1.1rem;
     opacity: 0.9;
 }
 
-.nav-logo span {
-    color: var(--accent);
-}
+.nav-logo span { color: #F472B6; }
 
 .auth-container {
     width: 100%;
@@ -46,47 +43,45 @@
 .page-user .card {
     max-width: 450px;
     width: 100%;
-    background: var(--white);
+    background: #FFFDF9;
     padding: 45px;
     border-radius: 24px;
-    border: 1px solid var(--border-color);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.04); 
+    border: 1px solid #E8D5C4;
+    box-shadow: 0 20px 40px rgba(192, 132, 252, 0.08);
 }
 
 .card-header h3 {
     margin-bottom: 12px;
-    color: var(--primary);
+    color: #2D1B4E;
     font-size: 1.1rem;
     letter-spacing: -0.01em;
 }
 
 .card-header p {
-    line-height: 1.6; 
+    line-height: 1.6;
     font-size: 0.95rem;
-    color: var(--text-muted);
+    color: #A0896B;
     margin-bottom: 25px;
 }
 
-.input-group {
-    margin-bottom: 24px;
-}
+.input-group { margin-bottom: 24px; }
 
 .input-group label {
     display: block;
     margin-bottom: 10px;
     font-size: 0.75rem;
-    color: var(--text-main);
+    color: #2D1B4E;
     font-weight: 700;
 }
 
 .page-user input {
-    border: 1.5px solid var(--border-color);
-    background: #fcfcfd;
+    border: 1.5px solid #E8D5C4;
+    background: #FDF8F2;
     transition: all 0.2s ease;
 }
 
 .page-user input::placeholder {
-    color: #94a3b8;
+    color: #C4A882;
     font-size: 0.9rem;
 }
 
@@ -94,15 +89,14 @@
     display: block;
     margin-top: 10px;
     font-size: 0.8rem;
-    color: var(--text-muted);
+    color: #A0896B;
     line-height: 1.4;
 }
-
 
 .page-user .btn-primary {
     width: 100%;
     height: 58px;
-    background: linear-gradient(135deg, var(--accent), #4a54d1);
+    background: linear-gradient(135deg, #F472B6, #C084FC);
     border: none;
     border-radius: 16px;
     color: white;
@@ -110,13 +104,13 @@
     font-size: 0.9rem;
     letter-spacing: 0.5px;
     cursor: pointer;
-    box-shadow: 0 10px 20px rgba(92, 103, 242, 0.2);
+    box-shadow: 0 10px 20px rgba(244, 114, 182, 0.2);
     transition: all 0.3s ease;
     margin-top: 10px;
 }
 
 .page-user .btn-primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 15px 25px rgba(92, 103, 242, 0.3);
+    box-shadow: 0 15px 25px rgba(244, 114, 182, 0.3);
     filter: brightness(1.05);
 }
